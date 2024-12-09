@@ -17,7 +17,7 @@ class TimeSurface:
         self.update_type = update_type
 
     def new_surf(self, time=0):
-        surf = np.zeros((self.h+1, self.w+1))
+        surf = np.zeros((self.h+1, self.w+1), dtype=np.float32)
         for i in range(int(time/self.time_step)):
             self.update_surf()
         return self.surf
