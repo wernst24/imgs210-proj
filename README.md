@@ -1,6 +1,10 @@
-Abstract
+## Abstract
+
 Using event camera datasets from the University of Zurich and potentially eye-tracking data from PerForM labs, I will compare different methods of filtering by computational efficiency, noise reduction, and edge preservation. I am planning to implement Gaussian blurring, correlation, median, and bilateral filtering, and design and implement a modification of the Canny edge detection algorithm for detecting edges on time surfaces (TSs) generated from event stream data.
 
 Depending on ease of implementation, I will train and evaluate a CNN for image segmentation on the filtered TSs, using IOU loss to grade edge detection and noise reduction. If I am unable to successfully implement a CNN by the project due date, different methods will be subjectively graded on edge preservation, noise reduction, and their compute times will be analyzed. I will not be working in a group on this project. In imaging systems, noise can be generated from a variety of sources. While conventional cameras are well-characterized in the noise they generate and have many effective algorithms, event cameras can be significantly noisier in certain scenarios, and there is a shorter history of noise reduction techniques. I seek to explore the effectiveness of conventional noise reduction image processing operations, and aim to develop a novel implementation of the Canny algorithm suited to the fundamentally different output of event cameras.
 
 I plan to present my project, including examples of each algorithm and their applications. I will also include a description of the math/code behind my implementations, and will present an analysis of the computational complexity, noise reduction, and edge preservation of the different methods on a variety of captured data.
+
+## Ideas for comparison:
+Take edge-filtered images as ground truth, and assume zero noise. Then, use the similarity metric from https://ieeexplore.ieee.org/document/1284395 
