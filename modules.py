@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import time
 import cv2 as cv
 from scipy.ndimage import gaussian_filter, median_filter
+from typing import Callable
 
 class TimeSurface:
     def __init__(self, all_events, width, height, decay_const, time_step, update_type="static"):
@@ -76,5 +77,25 @@ class TimeSurface:
             resized = cv.resize(processing(frame), (self.w, self.h))
             cv.imwrite(path + "0"*(num_digits - len(str(i))) + str(i) + ".jpg", frame*255)
             
-
+    
     # def cv_record((self, start_time, end_time, frame_width, frame_height, blur_type="none"))
+
+# displays a grid of images with different functions applied to them
+def imagegrid(images : list[np.array], funcs : Callable[[np.array], np.array], buffer_size=5):
+    height_disp = images[0].shape[0]
+    width_disp = images[0].shape[1]
+    vertical_buffer = np.zeros((height_disp, buffer_size), dtype=np.float32) # vertical black lines
+    horizontal_buffer = np.zeros((width_disp + buffer_size, buffer_size), dtype=np.float32).transpose()
+
+    image_grid = [[np.concatenate([np.concatenate([func(np.array(image, dtype=np.float32)), vertical_buffer], axis=1), horizontal_buffer], axis=0) for func in funcs] for image in images]
+
+    # images_f32 = [np.concatenate([np.concatenate([images[i], vertical_buffer], axis=1), horizontal_buffer], axis=0) for i in range(len(images))]
+    image_rows = [np.concatenate(image_grid[i], axis = 1) for i in range(len(image_grid))]
+    all_images = np.concatenate(image_rows, axis=0)
+    try:
+        cv.imshow('all images', all_images)
+        while True:
+            if cv.waitKey(1) == ord('q'):
+                break
+    finally:
+        cv.destroyAllWindows()
