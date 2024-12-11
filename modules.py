@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import time
 import cv2 as cv
 from scipy.ndimage import gaussian_filter, median_filter
-from typing import Callable
+from collections.abc import Callable
 
 class TimeSurface:
     def __init__(self, all_events, width, height, decay_const, time_step, update_type="static"):
@@ -93,8 +93,8 @@ def imagegrid(images : list[np.array], funcs : Callable[[np.array], np.array], b
     image_rows = [np.concatenate(image_grid[i], axis = 1) for i in range(len(image_grid))]
     all_images = np.concatenate(image_rows, axis=0)
     try:
-        cv.imshow('all images', all_images)
         while True:
+            cv.imshow('all images', all_images)
             if cv.waitKey(1) == ord('q'):
                 break
     finally:
